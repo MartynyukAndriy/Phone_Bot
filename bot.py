@@ -23,13 +23,16 @@ def hello():
 @input_error
 def add(user_data):
     phones[user_data.split()[1]] = user_data.split()[2]
-    return f"Number for {user_data.split()[1]} has been added"
+    return f"Number {user_data.split()[2]} for {user_data.split()[1]} has been added"
 
 
 @input_error
 def change(user_data):
-    phones[user_data.split()[1]] = user_data.split()[2]
-    return f"Number for {user_data.split()[1]} has been changed"
+    if user_data.split()[1] in phones.keys():
+        phones[user_data.split()[1]] = user_data.split()[2]
+        return f"Number {user_data.split()[2]} for {user_data.split()[1]} has been changed"
+    else:
+        return f"That is no such user - '{user_data.split()[1]}' in your phone book"
 
 
 @input_error
@@ -72,7 +75,7 @@ def parser(command):
 
 def main():
     while True:
-        user_command = input()
+        user_command = input(">> ")
         command = parser(user_command)
         if command == "end_work":
             print(COMMANDS["end_work"]())
